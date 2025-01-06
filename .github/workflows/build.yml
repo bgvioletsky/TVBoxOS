@@ -8,6 +8,7 @@ on:
 #       - main
     workflow_dispatch:
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,9 +33,6 @@ jobs:
         echo "export ANDROID_HOME=$HOME/Android/Sdk" >> $GITHUB_ENV
         # 将 Android SDK 工具目录添加到 PATH 环境变量中
         echo "export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools" >> $GITHUB_ENV
-
-    - name: Accept Android SDK Licenses
-      run: yes | sdkmanager --licenses
 
     - name: Install specific Android SDK platform and build tools
       run: |
