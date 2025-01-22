@@ -25,7 +25,9 @@ jobs:
       # 设置Android SDK
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
-
+        
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       # 构建项目
       - name: Build with Gradle
         run: ./gradlew build
