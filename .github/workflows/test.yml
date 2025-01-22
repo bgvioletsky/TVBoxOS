@@ -1,31 +1,31 @@
-name: Test Build
+name: Android CI
 
 on:
-#  push:
-#    branches:
-#      - main
-#  pull_request:
+  # 触发工作流程的事件，例如推送代码到主分支
+  # push:
+    # branches:
+    #   - main
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 设置Java环境
+      - name: Set up JDK
+        uses: actions/setup-java@v2
         with:
-          fetch-depth: 0
-      - name: Build With Gradle
-        run: |
-          chmod +x gradlew
-          ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
-      - name: Prepare App
-        run: |
-          mkdir -p ${{ github.workspace }}/apk/
-          for file in `find ~ -name "*.apk" -print`; do
-            mv "$file" ${{ github.workspace }}/apk/
-          done
-      - name: Upload App To Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: com.github.tvbox.osc
-          path: ${{ github.workspace }}/apk/*
+          java-version: '11'
+          distribution: 'adopt'
+
+      # 设置Android SDK
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+
+      # 构建项目
+      - name: Build with Gradle
+        run: ./gradlew build
