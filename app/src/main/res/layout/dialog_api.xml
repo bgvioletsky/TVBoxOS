@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/input_dialog_api_input"
-                    android:hint="请输入配置地址"
+                    android:hint="https://github.ednovas.xyz/https://raw.githubusercontent.com/bgvioletsky/BGBox_warehouse/master/json/api.json"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLines="1"
