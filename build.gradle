@@ -5,6 +5,8 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven { url 'https://celetor.github.io/crosswalk/releases/crosswalk/android/maven2' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url "https://maven.aliyun.com/repository/releases" }
         maven { url "https://maven.aliyun.com/repository/public" }
         maven { url "https://storage.googleapis.com/r8-releases/raw" }
@@ -22,6 +24,8 @@ allprojects {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven { url 'https://celetor.github.io/crosswalk/releases/crosswalk/android/maven2' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url "https://maven.aliyun.com/repository/releases" }
         maven { url "https://maven.aliyun.com/repository/public" }
         gradlePluginPortal()
