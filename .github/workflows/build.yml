@@ -19,14 +19,31 @@ jobs:
           chmod +x gradlew
            ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
           # ./gradlew bundleRelease --build-cache --parallel --daemon --warning-mode all
+      - name: 创建版本号
+        run: |              
+             if ! mv ./config/version  version; then
+                    echo "Failed to move the file."
+                    exit 1
+             fi
+                 
+             echo "version=$(bash ./config/version.sh)" >> $GITHUB_ENV
+             echo "**发布时间：$(date +'%Y-%m-%d %H:%M:%S')**" >> bgcode.txt
+             mv version config/version
       - name: Prepare App
         run: |
           mkdir -p ${{ github.workspace }}/apk/
           for file in `find ~ -name "*.apk" -print`; do
             mv "$file" ${{ github.workspace }}/apk/
           done
+
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v4
         with:
           name: bgcode
           path: ${{ github.workspace }}/apk/*
+      - name: 发布到release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.version }}
+          body_path: bgcode.txt
+          files: ${{ github.workspace }}/apk/*
