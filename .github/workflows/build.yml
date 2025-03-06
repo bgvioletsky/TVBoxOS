@@ -35,7 +35,14 @@ jobs:
           for file in `find ~ -name "*.apk" -print`; do
             mv "$file" ${{ github.workspace }}/apk/
           done
-
+      - name: Commit and push changes
+        run: |
+            git config --local user.email bglhcode@icloud.com
+            git config --local user.name  bgcode
+            git pull
+            git add ./config/version
+            git commit -m "更新version版本"
+            git push
       - name: Upload App To Artifact
         uses: actions/upload-artifact@v4
         with:
