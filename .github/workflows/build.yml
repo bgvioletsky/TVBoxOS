@@ -21,7 +21,7 @@ jobs:
           ./gradlew bundleRelease --build-cache --parallel --daemon --warning-mode all
       - name: Prepare App
         run: |
-          mkdir -p ${{ github.workspace }}/apk/
+          mkdir -p ${{ github.workspace }}/apk/release/
           for file in `find ~ -name "*.apk" -print`; do
             mv "$file" ${{ github.workspace }}/apk/
           done
@@ -29,4 +29,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bgcode
-          path: ${{ github.workspace }}/apk/release/*
+          path: ${{ github.workspace }}/apk/*
