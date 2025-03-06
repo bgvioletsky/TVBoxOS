@@ -3,6 +3,14 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
 
+    signingConfigs {
+        release {
+            storeFile file("bgcode.jks") // 签名文件的路径
+            storePassword "bgcode" // 签名文件的密码
+            keyAlias "bgcode" // 密钥别名
+            keyPassword "bgcode" // 密钥密码
+        }
+    }
     defaultConfig {
         applicationId 'com.github.tvbox.osc'
         minSdkVersion 16
@@ -38,6 +46,9 @@ android {
             ndk {
                 abiFilters 'armeabi-v7a'
             }
+        }
+         release {
+            signingConfig signingConfigs.release
         }
     }
 
