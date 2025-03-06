@@ -7,7 +7,7 @@ def TARGET_SDK_VERSION = 28
 def APPLICATION_ID = 'com.github.tvbox.osc'
 def VERSION_CODE = 1
 def VERSION_NAME = '1.0.0'
-def ABI_FILTERS = ['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']
+
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION
@@ -44,16 +44,10 @@ android {
         debug {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled false
-            ndk {
-                abiFilters.addAll(ABI_FILTERS)
-            }
         }
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true
-            ndk {
-                abiFilters.addAll(ABI_FILTERS)
-            }
             signingConfig signingConfigs.release
         }
     }
