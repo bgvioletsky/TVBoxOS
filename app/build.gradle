@@ -1,7 +1,16 @@
 apply plugin: 'com.android.application'
 
+// 定义常量
+def COMPILE_SDK_VERSION = 30
+def MIN_SDK_VERSION = 16
+def TARGET_SDK_VERSION = 28
+def APPLICATION_ID = 'com.github.tvbox.osc'
+def VERSION_CODE = 1
+def VERSION_NAME = '1.0.0'
+def ABI_FILTERS = ['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']
+
 android {
-    compileSdkVersion 30
+    compileSdkVersion COMPILE_SDK_VERSION
 
     signingConfigs {
         release {
@@ -11,14 +20,15 @@ android {
             keyPassword "bgcode" // 密钥密码
         }
     }
+
     defaultConfig {
-        applicationId 'com.github.tvbox.osc'
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName '1.0.0'
+        applicationId APPLICATION_ID
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
         multiDexEnabled true
-        //设置room的Schema的位置
+        // 设置 room 的 Schema 的位置
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
@@ -34,19 +44,45 @@ android {
         debug {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled false
-
             ndk {
-                abiFilters 'armeabi-v7a','arm64-v8a', 'x86', 'x86_64'
+                abiFilters.addAll(ABI_FILTERS)
             }
         }
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true
-
             ndk {
-                abiFilters 'armeabi-v7a','arm64-v8a', 'x86', 'x86_64'
+                abiFilters.addAll(ABI_FILTERS)
             }
             signingConfig signingConfigs.release
+        }
+    }
+
+    flavorDimensions "abi"
+    productFlavors {
+        armv7 {
+            dimension "abi"
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+        arm64 {
+            dimension "abi"
+            ndk {
+                abiFilters 'arm64-v8a'
+            }
+        }
+        x86 {
+            dimension "abi"
+            ndk {
+                abiFilters 'x86'
+            }
+        }
+        x86_64 {
+            dimension "abi"
+            ndk {
+                abiFilters 'x86_64'
+            }
         }
     }
 
@@ -59,6 +95,7 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
     dexOptions {
         javaMaxHeapSize "4g"
         additionalParameters += '--multi-dex'
@@ -71,10 +108,13 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    google()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
+
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
-
 
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation 'com.google.zxing:core:3.3.0'
@@ -84,7 +124,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation files('libs/thunder.jar')
     implementation files('libs/commons-lang3-3.12.0.jar')
-
 
     implementation 'com.squareup.okhttp3:okhttp:3.12.11'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
@@ -105,22 +144,16 @@ dependencies {
     implementation project(":player")
     implementation project(":quickjs")
 
-//    implementation('org.xwalk:xwalk_shared_library:23.53.589.4') {
-//        exclude group: 'com.android.support'
-//    }
+    implementation(name:'xwalk_shared_library-23.53.589.4',ext:'aar')
     implementation 'com.lzy.net:okgo:3.0.4'
-    // implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
     implementation 'com.owen:tv-recyclerview:3.0.0'
-
     implementation 'com.github.getActivity:XXPermissions:13.6'
     implementation 'org.jsoup:jsoup:1.14.1'
     implementation 'com.github.hedzr:android-file-chooser:v1.2.0-final'
     implementation 'commons-io:commons-io:2.11.0'
     implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
-    implementation(name:'xwalk_shared_library-23.53.589.4',ext:'aar')
-    //支持http3
+
+    // 支持 http3
     implementation ('com.google.net.cronet:cronet-okhttp:0.1.0')
-//    implementation 'com.google.android.gms:play-services-cronet:18.0.1'
     implementation ('org.chromium.net:cronet-embedded:101.4951.41')
 }
-
