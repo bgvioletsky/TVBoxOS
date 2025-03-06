@@ -60,7 +60,7 @@ public class ApiDialog extends BaseDialog {
         inputApi = findViewById(R.id.input);
         inputApiLive = findViewById(R.id.inputLive);
         //内置网络接口在此处添加
-        inputApi.setText(Hawk.get(HawkConfig.API_URL, ""));
+        inputApi.setText(Hawk.get(HawkConfig.API_URL, "https://github.ednovas.xyz/https://raw.githubusercontent.com/bgvioletsky/BGBox_warehouse/master/json/api.json"));
         inputApiLive.setText(Hawk.get(HawkConfig.LIVE_API_URL, Hawk.get(HawkConfig.API_URL)));
         findViewById(R.id.inputSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
