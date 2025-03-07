@@ -1,6 +1,8 @@
 name: my_Build
 
 on:
+  schedule:
+    - cron: 6 */8 * * *
 #  push:
 #    branches:
 #      - main
